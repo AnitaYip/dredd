@@ -1,0 +1,15 @@
+language: bash
+services: docker
+before_script:
+  - docker -v
+  - sudo apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install docker-engine
+  - docker -v
+  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+script:
+  - docker build -t "realpage/dredd:ci"
+  - docker images
+  # build and push all variations of images
+  - if [[ $TRAVIS_BRANCH == 'master' ]]; then cd ../ && bash build.sh ; fi
+notifications:
+  slack:
+    secure: ukIO/itKnZkToUMXPo6mXbfEaMB25BNXKDhFLkdGz2vvTl0w6tv5Oc11tjqTrdWwtqv1fbeE+WNC5x7mHc3MV4GjUUGALdCfMiKUQsyz+LKa+mIFcey4iOpj0Q+z6ecTLBVjO90bkV9EvSnoS2uLLW4Bpy6e+Iaecl8Z9XeQwC8+lb4EwJm9ynPTm0GfxfAGmZclOwRHJWTZlCkpRqRAq13UjduIltUejinU9+rPJVF3Q6Z23lEZdU62cvaVSCwhkQIACsQP0qvyNdNwS4bBA09AzYQYzPhYr4d1joeOxTUXKQ1u0Pd6gzQxEPYLnSyqtu3MB7P5PTQsdH5Gj5xiqaPYKnxgXm93NOWH1M6jyfpYzAyvPs0imJ9G05+NUMNnrPOBLlv65PVG3LRoKtG5aEG29cEMQEoFESgf54eI1Ot2u+vWDvU/GygzL3wF1XGSWcVCZXGUsAxUtbN8A+Z/aquZ23fo8w2w/VGhOcA8uI12W3Lsbr7O7nYHLgsIO3b2OhJKG6u1MMwyr2VpfOoK1KdWfsFzgFReqP0WMiCQzRHgwyw//p8mIszoGaFFRqVRHA4nyt0Hf77V7sApj0NVL5WfEDNLR7v1YI1B8SE9YZ+B2IO+tLGYhPOgpR2/oWvoRVtWMLkZhig5tH1qnaXc+cV7k2mzIs2i5YnZJ2A3hpw=
