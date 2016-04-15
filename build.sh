@@ -11,7 +11,6 @@ done
 
 echo "Building base images: ${tagscli}"
 docker build ${tagscli} -f Dockerfile .
-docker images
 
 echo "Pushing images"
 for version in "${tags[@]}"; do
