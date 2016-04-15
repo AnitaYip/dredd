@@ -6,7 +6,7 @@ before_script:
   - docker -v
   - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 script:
-  - docker build -t "realpage/dredd:ci"
+  - docker build -t "realpage/dredd:ci" .
   - docker images
   # build and push all variations of images
   - if [[ $TRAVIS_BRANCH == 'master' ]]; then cd ../ && bash build.sh ; fi
