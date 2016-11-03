@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 
 repository="realpage/dredd"
-tags=( "1.0.9" "1.0" "1" )
+tags=( "2.2.3" "2.2" "2" )
 tagscli=
 
 echo "Building tags for images"

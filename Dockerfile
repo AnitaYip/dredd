@@ -1,13 +1,8 @@
-FROM ubuntu:14.04
+FROM node:7.0
 MAINTAINER Foundation DevOps foundation-devops@realpage.com
-LABEL version="1.0.0" \
-      com.realpage.dredd.version="1.0.9"
+LABEL com.realpage.dredd.version="2.2.3"
 
-# install node.js and npm
-RUN apt-get -qq update \
-    && apt-get install -y nodejs \
-    && apt-get install -y npm \
-    && ln -s /usr/bin/nodejs /usr/bin/node \
-    && apt-get clean \
+RUN npm install -g dredd@2.2.3
 
-    && npm install -g dredd@1.0.9
+# prevent node from running continuously
+CMD [ "" ]
