@@ -2,12 +2,12 @@ language: bash
 services: docker
 before_script:
   - docker -v
-  - sudo apt-get -y -o Dpkg::Options::="--force-confdef" -o Dpkg::Options::="--force-confold" install docker-engine
-  - docker -v
-  - docker login -e="$DOCKER_EMAIL" -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
+  - docker login -u="$DOCKER_USERNAME" -p="$DOCKER_PASSWORD"
 script:
   - docker build -t "realpage/dredd:ci" .
+  - docker run --rm realpage/dredd:ci dredd --version
   - docker images
+after_success:
   # build and push all variations of images
   - if [[ $TRAVIS_BRANCH == 'master' ]]; then bash build.sh ; fi
 notifications:
